@@ -1,13 +1,5 @@
 # version: "2"
 
-
-# networks:
-#   bridge:
-#     # name: bridge
-#     # driver: bridge
-#     external: true
-#     labels:
-#       com.docker.compose.internal.network: true
 networks:
   app_net:
     ipam:
@@ -15,17 +7,8 @@ networks:
       config:
         - subnet: "10.10.10.0/24"
         - subnet: "2001:3984:3989::/64"
-# extra_hosts:
-#   - host.docker.internal:host-gateway
-#   - payment.local:host-gateway
-#   - syxpay-api.local:host-gateway
-#   - notification.local:host-gateway
 
 services:
-  # utils:
-  #   extra_hosts:
-  #     - "example1:10.10.10.2"
-  #     - "example2:10.10.10.3"
   web:
     networks:
       app_net:
@@ -36,6 +19,7 @@ services:
           - .local
     build: 
       dockerfile: ./Dockerfile-nginx
+      context: ./
     depends_on:
       - php-fpm
       - mysql
@@ -55,13 +39,9 @@ services:
     restart: on-failure
     networks:
       - app_net
-    # extra_hosts: # for linux hosts since version 20.10
-    #   - host.docker.internal:host-gateway
-    #   - payment.local:host-gateway
-    #   - syxpay-api.local:host-gateway
-    #   - notification.local:host-gateway
     build: 
       dockerfile: ./Dockerfile-phpfpm
+      context: ./
     volumes:
       - ./www:/var/www/html
   mysql:
