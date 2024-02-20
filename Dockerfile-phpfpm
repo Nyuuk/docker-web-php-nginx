@@ -1,0 +1,23 @@
+from bitnami/php-fpm:8.2
+
+# RUN groupmod -g 1000 -o www-data
+
+# RUN adduser -D -u 1000 --home /var/www/html www-data
+# RUN useradd -m -u 1000 -g 1000 -o -s /bin/false --home /var/www/html www-data
+# RUN usermod -u 1000 www-data
+
+# ARG UNAME=root
+# ARG UGROUP=root
+# ARG UID=1000
+# ARG GID=1001
+# RUN usermod  --uid $UID $UNAME
+# RUN groupmod --gid $GID $UGROUP
+
+# USER www-data
+# RUN docker-php-ext-install pdo_mysql intl opcache gd
+
+RUN groupadd -g 1000 nyuuk
+RUN usermod -a -G nyuuk root
+RUN usermod -a -G www-data root
+RUN usermod -a -G nyuuk www-data
+# RUN usermod -a -G nyuuk nginx

@@ -1,0 +1,22 @@
+FROM nginx:latest
+
+# RUN adduser -D -u 1000 --home /var/www/html www-data
+# RUN usermod -u 1000 www-data
+# ARG UNAME=root
+# ARG UGROUP=root
+# ARG UID=1000
+# ARG GID=1001
+# RUN usermod  --uid $UID $UNAME
+# RUN groupmod --gid $GID $UGROUP
+
+# USER www-data
+
+
+RUN groupadd -g 1000 nyuuk
+RUN usermod -a -G nyuuk root
+RUN usermod -a -G nginx root
+RUN usermod -a -G www-data root
+RUN usermod -a -G nyuuk www-data
+RUN usermod -a -G nginx www-data
+RUN usermod -a -G nyuuk nginx
+RUN usermod -a -G www-data nginx
