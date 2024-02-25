@@ -22,7 +22,6 @@ services:
       context: ./
     depends_on:
       - php-fpm
-      - mysql
     ports:
       - '80:80'
     volumes:
